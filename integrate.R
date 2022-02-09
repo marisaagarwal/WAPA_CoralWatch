@@ -12,7 +12,7 @@
 ##  Start Date:    2022-02-08
 ##
 
-##  Notes:         RRUN THIS FILE BEFORE EVERY SESSION 
+##  Notes:         RUN THIS FILE BEFORE EVERY SESSION 
 
 
 
