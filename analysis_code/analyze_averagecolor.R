@@ -19,6 +19,17 @@
     CoralWatch_data %>%
       group_by(site, date_time, water_temp_C, coral_type) %>%
       summarise(average_colorcode = mean(colorcode_average))
+  
+## 3. Explore data
+  
+  # dates surveyed (Sept 2015 - present)
+  unique(CoralWatch_data$date_time)
+  min(CoralWatch_data$date_time)
+  max(CoralWatch_data$date_time)
+  
+  
+  
+  
 
   
   
