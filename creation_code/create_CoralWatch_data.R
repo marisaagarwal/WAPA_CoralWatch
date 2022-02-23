@@ -71,7 +71,7 @@
               na_if, 0)
   
   # combine date and time columns
-  CoralWatch_data$date_time = paste(CoralWatch_data$date,CoralWatch_data$Time)
+  CoralWatch_data$date_time = paste(CoralWatch_data$date, CoralWatch_data$Time)
     
   
 ## 3. Input the first row of data bc the download from CoralNet removes it
