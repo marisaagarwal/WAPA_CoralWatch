@@ -49,9 +49,9 @@
   
   # # averages from each survey: linear trend
   # CoralWatch_average_colorcodes %>%
-  #   ggplot(aes(date_time, average_colorcode)) +
-  #     geom_point(aes(color = coral_type, shape = coral_type)) +
-  #     geom_smooth(method = "lm", aes(group = coral_type, color = coral_type), se = F) +
-  #     facet_wrap(~site) +
-  #     theme_light()
+    # ggplot(aes(date_time, average_colorcode)) +
+    #   geom_point(aes(color = coral_type, shape = coral_type)) +
+    #   geom_smooth(method = "lm", aes(group = coral_type, color = coral_type), se = F) +
+    #   facet_wrap(~site) +
+    #   theme_light()
     
