@@ -41,6 +41,7 @@
   # for importing different formats
   library(readr)
   library(readxl)
+  library(data.table)
   
   # for easier tidy stats 
   library(rstatix)
