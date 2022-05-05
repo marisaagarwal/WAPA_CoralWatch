@@ -1,11 +1,13 @@
-##  Project Name:  WAPA Internship CoralWatch Analyses
+##  Project Name:  WAPA Internship Temperature & CoralWatch Analyses
 ##
-##  Objective:     Assess how coral color (aka health) has changed
-##                 over time.
+##  Objective:     Assess how water temperatures have changed over time; assess
+##                 how coral color (aka health) has changed over time.
 ##
-##  Approach:      1. Obtain most recent download of CoralWatch color 
-##                    data from from Adelup, Asan, & Agat.
-##                 2. Analyze data to fulfill research objective.
+##  Approach:      1. Obtain most recent download of HOBO loggers from WAPA
+##                    reef flat program
+##                 2. Obtain most recent download of CoralWatch color data
+##                    from from Adelup, Asan, & Agat.
+##                 3. Analyze data to fulfill research objective.
 ##
 ##  Authors:       Marisa Agarwal
 ##
@@ -18,7 +20,7 @@
 
 ##  1. point to working directory
 
-  setwd("research/WAPA_CoralWatch")
+  setwd("research/WAPA_temperatures")
 
 
 ##  2. Set up core functionality
@@ -42,12 +44,14 @@
   library(readr)
   library(readxl)
   library(data.table)
+  library(qdapRegex)
   
   # for easier tidy stats 
   library(rstatix)
   library(easystats)
   library(multcomp)
   library(vegan)
+  library(mgcv)
   
   # call to visualisation & output generation
   library(ggplot2)
