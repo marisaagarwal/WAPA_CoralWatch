@@ -55,3 +55,16 @@
     #   facet_wrap(~site) +
     #   theme_light()
     
+  #distribution of colors 
+  darkcolor_distribution %>%
+    ggplot() +
+      geom_bar(aes(x = factor(date), y = count_colorcode, 
+                   fill = darkcode_value),
+               stat = "identity", position = "fill") +
+      scale_fill_brewer(palette = "YlOrBr") +
+      # facet_wrap(~site, ncol = 2) +
+      theme_light()
+  
+  
+  
+    
