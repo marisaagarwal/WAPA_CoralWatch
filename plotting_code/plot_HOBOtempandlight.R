@@ -77,7 +77,18 @@
         stat_smooth(method = "gam", aes(color = Location), se = F) +
         theme_light()
     
-    
-    
+    # Piti sites - only outplant loggers
+    templightdepth_data %>%
+      filter(Location %in% c("Piti Outplant 10", "Piti Outplant 20",
+                             "Piti Outplant 28", "Piti Outplant 50")) %>%
+      filter(Variable == "Temp_C") %>%
+      mutate(day = floor_date(DateTime, "day")) %>%
+      group_by(Location, day) %>%
+      summarize(avg_daily_temp = mean(Value)) %>%
+        ggplot(aes(day, avg_daily_temp)) +
+          # geom_point(alpha = 0.1, aes(color = Location)) +
+          stat_smooth(method = "gam", aes(color = Location), se = T) +
+          theme_light()
+      
 
     
