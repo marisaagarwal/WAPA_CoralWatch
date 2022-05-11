@@ -28,19 +28,43 @@
     filter(Variable == "Temp_C")
 
   
-## 3. Are the outplant loggers recording stat sig different temperatures?
+## 3. Are the outplant loggers recording different temperatures?
   
-  # want to run a unique gam for each site within the dataframe
-  
-    # current test, still not working!
-    templightdepth_data %>%
-      as_tibble() %>%
-      filter(Variable == "Temp_C") %>%
-      filter(Location %in% c("Piti Outplant 10", "Piti Outplant 20",
-                             "Piti Outplant 28", "Piti Outplant 50",
-                             "Piti LL", "Piti_LL_")) %>%
-      nest(-Location) %>% 
-      mutate(fit = map(data, ~ gam(Value ~ s(DateTime),
-                                   method = "REML", data = .x)))
+  # run a unique GAM for each site
+    outplant_temperature_models = 
+      templightdepth_data %>%
+        as.data.frame() %>%
+        filter(Variable == "Temp_C") %>%
+        filter(Location %in% c("Piti Outplant 10", "Piti Outplant 20",
+                               "Piti Outplant 28", "Piti Outplant 50",
+                               "Piti LL", "Piti_LL_")) %>%
+        dplyr::select(-c(SerialNo, Variable)) %>%
+        drop_na() %>%
+        group_by(Location) %>%
+        nest() %>%
+        mutate(mod = map(.x = data,
+                         .f = ~ gam(Value ~ s(as.numeric(DateTime)), 
+                                    method = "REML", data = .x)))
+    
+        # how much of variation in data is explained by the gam?
+          outplant_temperature_models %>%
+                mutate(Rsquare_mod = map_dbl(mod, ~ summary(.)$r.sq))
+          
+        # access to other model outputs here: *unnest the column that has the info you want*
+        outplant_temperature_models %>%
+              mutate(tidy_mod = map(mod, tidy), 
+                     glance_mod = map(mod, glance),
+                     augment_mod = map(mod, augment)) %>%
+              unnest(tidy_mod)
+          
 
+
+
+        
+        
+        
+        
+        
+        
   
+    

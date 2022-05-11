@@ -110,8 +110,8 @@
            "Asan_Outplant_20_" = "Piti Outplant 20",
            "Asan_Outplant_28_" = "Piti Outplant 28",
            "Asan_Outplant_10_" = "Piti Outplant 10")
-      
-      
+
+   
     
 ## LEARNING/PRACTICE WITH STR_EXTRACT 
 #  temp_file_names = 

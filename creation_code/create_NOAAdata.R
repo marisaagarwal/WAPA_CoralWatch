@@ -36,8 +36,8 @@
   NOAA_data %<>% 
     dplyr::select(-c("YYYY", "MM", "DD"))
   
-  # prune dates for only those covered by CoralWatch surveys (Sept 5, 2015 - present)
-  NOAA_data %<>% filter(date>"2015-09-04")
+  # # prune dates for only those covered by CoralWatch surveys (Sept 5, 2015 - present)
+  # NOAA_data %<>% filter(date>"2015-09-04")
   
 
 ## 4. Add in Bleaching Alert Level characterizations

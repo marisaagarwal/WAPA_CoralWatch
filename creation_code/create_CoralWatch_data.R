@@ -1,10 +1,10 @@
-# updated with data as of 2022-02-08
+# updated with data as of 2022-05-10
 
 
 ## 1. Set up
 
   # point to data locale
-  data_locale = "data/CoralWatchFeb22/"
+  data_locale = "data/CoralWatch Data/CoralWatch2022-05/"
   
   # point to data file
   data_file = "data.xlsx"
@@ -61,8 +61,8 @@
   CoralWatch_data %<>%
     mutate(site = recode(site, 
                          `Asan Beach Gov Complex, Guam` = "adelup",
-                         `Asan Beach Unit, Site A, Guam` = "asan_A",
-                         `Asan Beach Unit, Site B, Guam` = "asan_B",
+                         `Asan Beach Unit, Site A, Guam` = "asan",
+                         `Asan Beach Unit, Site B, Guam` = "asan",
                          `Agat Cemetery, Guam` = "agat"))
   
   # change zero values in depths and temps to NAs
@@ -78,7 +78,7 @@
 ## NEED TO MANUALLY UPDATE THIS EVERYTIME YOU DOWNLOAD AN UPDATED DATA FILE FROM CORALNET
   
   # find the contents of the first row online
-  first_row = c(13.47568, 144.703613, "asan_A", "Charles Hambley", "Charles Hambley", "2021-05-24",
+  first_row = c(13.47568, 144.703613, "asan", "Charles Hambley", "Charles Hambley", "2021-05-24",
                "09:00 AM", "Full sunshine", NA, NA, NA, NA, "Snorkeling", "transect 5",
                1, "D2", "D3", 2.5, "Branching corals", NA, "2021-05-24 09:00 AM")
 
@@ -101,11 +101,12 @@
            depth_ft = as.double(depth_ft),
            water_temp_C = as.double(water_temp_C),
            water_temp_F = as.double(water_temp_F),
-           coral_number = as.integer(coral_number))
+           coral_number = as.integer(coral_number),
+           lightcode_value = as.double(lightcode_value),
+           darkcode_value = as.double(darkcode_value))
   
   
   # confirm that all data type transforms happened & that first row was added
-  
   str(CoralWatch_data)
   
   

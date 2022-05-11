@@ -22,9 +22,14 @@
     separate(colorcode_darkest, 
              c("darkcode_group", "darkcode_value"),
              sep = cumsum(c(1,1)), remove = F)
-  
+
     
 ## 3. Summarize data
+  
+  # add in bleaching season
+  CoralWatch_data %<>%
+    mutate(month = month(date_time),
+           bleaching_season = if_else(7 <= month & month <= 10, "Y", "N"))
   
   # average color score by each survey
   CoralWatch_average_colorcodes =   
