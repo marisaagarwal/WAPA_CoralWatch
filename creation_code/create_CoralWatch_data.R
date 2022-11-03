@@ -101,9 +101,7 @@
            depth_ft = as.double(depth_ft),
            water_temp_C = as.double(water_temp_C),
            water_temp_F = as.double(water_temp_F),
-           coral_number = as.integer(coral_number),
-           lightcode_value = as.double(lightcode_value),
-           darkcode_value = as.double(darkcode_value))
+           coral_number = as.integer(coral_number))
   
   
   # confirm that all data type transforms happened & that first row was added

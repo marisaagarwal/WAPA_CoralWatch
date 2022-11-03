@@ -31,7 +31,7 @@
                 alpha = 0.6) +
       scale_y_continuous(name = "Avg colorcode", 
                          sec.axis = sec_axis(~.*10, name = "Monthly SST avg")) +
-      facet_wrap(~site) +
+      facet_wrap(~site, ncol = 1) +
       theme_light()
   
   # correlation between avg SST and avg bleaching level?

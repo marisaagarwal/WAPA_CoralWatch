@@ -23,6 +23,9 @@
       geom_line(aes(y = NOAA_SST_avg), color = "blue") +
       # geom_line(aes(y = NOAA_SST_max), color = "red") +
       # geom_line(aes(y = NOAA_SST_min), color = "purple") +
+      scale_x_datetime(date_breaks = "6 months", date_labels = "%m-%Y") +
+      labs(x="Date", 
+           y = "Average Daily Temperature (C)") +
       theme_light()
   
 
@@ -35,8 +38,8 @@
       xlim(24, 35) +
       ylim(24, 35) +
       labs(x = "HOBO Daily Average Temperature", 
-           y = "NOAA Daily Average Temperature", 
-           title = "2016-04 through 2021-09") +
+           y = "NOAA Daily Average Temperature") + 
+           # title = "2016-04 through 2021-09") +
       theme_light()
   
   

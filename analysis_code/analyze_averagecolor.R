@@ -22,6 +22,10 @@
     separate(colorcode_darkest, 
              c("darkcode_group", "darkcode_value"),
              sep = cumsum(c(1,1)), remove = F)
+  
+  CoralWatch_data %>%
+    mutate(lightcode_value = as.double(lightcode_value),
+           darkcode_value = as.double(darkcode_value))
 
     
 ## 3. Summarize data

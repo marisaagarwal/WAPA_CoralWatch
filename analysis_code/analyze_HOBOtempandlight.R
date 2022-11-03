@@ -24,8 +24,8 @@
               mean = mean(Value, na.rm = T),
               max = max(Value, na.rm = T))
 
-  temp_tempdata = templightdepth_data %>%
-    filter(Variable == "Temp_C")
+  # temp_tempdata = templightdepth_data %>%
+  #   filter(Variable == "Temp_C")
 
   
 ## 3. Are the outplant loggers recording different temperatures?

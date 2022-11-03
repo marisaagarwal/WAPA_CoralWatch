@@ -22,12 +22,16 @@
       facet_wrap(~site) +
       theme_light()
   
-  # all data: linear trend by site & coral type
+  # all data: linear trend by site & coral type (only branching and boulder)
   CoralWatch_data %>%
+    filter(coral_type %in% c("Boulder corals", "Branching corals")) %>%
     ggplot(aes(date_time, colorcode_average)) +
       geom_point(aes(color = coral_type, shape = coral_type), alpha = 0.4) +
       geom_smooth(method = "lm", aes(group = coral_type, color = coral_type), se = F) +
-      facet_wrap(~site) +
+      scale_x_datetime(date_breaks = "year", date_labels = "%Y") +
+      facet_wrap(~site, ncol = 1) +
+      labs(x = "Average Color Score",
+           y = "Date") +
       theme_light()
   
   # all data: boxplots with mean
@@ -93,7 +97,8 @@
                stat = "identity", position = "fill") +
       scale_fill_brewer(palette = "YlOrBr") +
       # facet_wrap(~site, ncol = 2) +
-      theme_light()
+      theme_light() +
+      theme(axis.text.x = element_text(angle = 90))
   
   
   

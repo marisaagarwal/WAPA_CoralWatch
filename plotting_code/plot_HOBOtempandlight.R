@@ -38,8 +38,8 @@
                                "Piti LL", "Piti_LL_")) %>%
         filter(Variable == "Temp_C") %>%
             ggplot(aes(DateTime, Value)) +
-                # geom_point(alpha = 0.1, aes(color = Location)) +
-                stat_smooth(method = "gam", aes(color = Location), se = F) +
+                geom_point(alpha = 0.1, aes(color = Location)) +
+                # stat_smooth(method = "gam", aes(color = Location), se = F) +
                 theme_light()
     
     
@@ -67,11 +67,12 @@
     templightdepth_data %>%
       filter(Location %in% c("Piti Outplant 10", "Piti Outplant 20",
                              "Piti Outplant 28", "Piti Outplant 50",
-                             "Piti LL", "Piti_LL_")) %>%
+                              "Piti_LL_", "Piti LL")) %>%
       filter(Variable == "Temp_C") %>%
         mutate(day = floor_date(DateTime, "day")) %>%
           group_by(Location, day) %>%
           summarize(avg_daily_temp = mean(Value)) %>%
+      # filter(year(day) > 2019) %>%
       ggplot(aes(day, avg_daily_temp)) +
         geom_point(alpha = 0.1, aes(color = Location)) +
         stat_smooth(method = "gam", aes(color = Location), se = F) +
