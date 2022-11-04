@@ -9,8 +9,6 @@
   # load in the data
   source(paste0(data_locale, "analyze_averagecolor.R"))
   
-  unique(CoralWatch_data$site)
-
   
 ## 2. Plot average CoralWatch color through time
   
@@ -18,64 +16,69 @@
   CoralWatch_data %>%
     ggplot(aes(date_time, colorcode_average)) +
       geom_point(aes(color = coral_type, shape = coral_type), alpha = 0.4) +
-      geom_smooth(method = "loess", se = F) +
-      facet_wrap(~site) +
+      geom_smooth(method = "loess", se = T) +
+      facet_wrap(~site, ncol = 1) +
       theme_light()
   
-  # all data: linear trend by site & coral type (only branching and boulder)
+  # all data: trend by site & coral type (only branching and boulder)
   CoralWatch_data %>%
     filter(coral_type %in% c("Boulder corals", "Branching corals")) %>%
     ggplot(aes(date_time, colorcode_average)) +
       geom_point(aes(color = coral_type, shape = coral_type), alpha = 0.4) +
-      geom_smooth(method = "lm", aes(group = coral_type, color = coral_type), se = F) +
+      geom_smooth(method = "loess", aes(group = coral_type, color = coral_type), se = T) +
       scale_x_datetime(date_breaks = "year", date_labels = "%Y") +
       facet_wrap(~site, ncol = 1) +
-      labs(x = "Average Color Score",
-           y = "Date") +
+      labs(x = "Date",
+           y = "Color Score", 
+           color = "Coral Type", shape = "Coral Type") +
       theme_light()
   
-  # all data: boxplots with mean
+  # all data: boxplots & line plots 
     ggplot() +
-      geom_boxplot(data = CoralWatch_data, 
+      geom_boxplot(data = CoralWatch_data,
                    aes(factor(date), colorcode_average,
                        color = bleaching_season),
                    alpha = 0.4) +
       scale_color_manual(values = c("blue", "red")) +
+      geom_point(data = CoralWatch_data %>%
+                          group_by(site, date) %>%
+                          summarise(average_colorcode = mean(colorcode_average)),
+                 aes(x = factor(date), y  = average_colorcode), color = "green",
+                 show.legend = F) +
       # geom_point(data = CoralWatch_data %>%
-      #                     group_by(site, date) %>%
-      #                     summarise(average_colorcode = mean(colorcode_average)),
-      #            aes(x = factor(date), y  = average_colorcode), color = "green",
+      #              group_by(site, date) %>%
+      #              summarise(average_lightcolorcode = mean(as.integer(lightcode_value))),
+      #            aes(x = factor(date), y  = average_lightcolorcode), color = "light green",
       #            show.legend = F) +
-      geom_point(data = CoralWatch_data %>%
-                   group_by(site, date) %>%
-                   summarise(average_lightcolorcode = mean(lightcode_value)),
-                 aes(x = factor(date), y  = average_lightcolorcode), color = "light green",
-                 show.legend = F) +
-      geom_point(data = CoralWatch_data %>%
-                           group_by(site, date) %>%
-                           summarise(average_darkcolorcode = mean(darkcode_value)),
-                 aes(x = factor(date), y  = average_darkcolorcode), color = "dark green",
-                 show.legend = F) +
+      # geom_point(data = CoralWatch_data %>%
+      #                      group_by(site, date) %>%
+      #                      summarise(average_darkcolorcode = mean(as.integer(darkcode_value))),
+      #            aes(x = factor(date), y  = average_darkcolorcode), color = "dark green",
+      #            show.legend = F) +
       # geom_line(data = CoralWatch_data %>%
       #                   group_by(site, date) %>%
       #                   summarise(average_colorcode = mean(colorcode_average)),
-      #           aes(x = factor(date), y  = average_colorcode, group = site), 
+      #           aes(x = factor(date), y  = average_colorcode, group = site),
       #           color = "green",
       #           show.legend = F) +
-      geom_line(data = CoralWatch_data %>%
-                          group_by(site, date) %>%
-                          summarise(average_lightcolorcode = mean(lightcode_value)),
-                aes(x = factor(date), y = average_lightcolorcode, group = site), 
-                color = "light green",
-                show.legend = F) +
-      geom_line(data = CoralWatch_data %>%
-                          group_by(site, date) %>%
-                          summarise(average_darkcolorcode = mean(darkcode_value)),
-                aes(x = factor(date), y = average_darkcolorcode, group = site), 
-                color = "dark green",
-                show.legend = F) +
+      # geom_line(data = CoralWatch_data %>%
+      #                     group_by(site, date) %>%
+      #                     summarise(average_lightcolorcode = mean(as.integer(lightcode_value))),
+      #           aes(x = factor(date), y = average_lightcolorcode, group = site), 
+      #           color = "light green",
+      #           show.legend = F) +
+      # geom_line(data = CoralWatch_data %>%
+      #                     group_by(site, date) %>%
+      #                     summarise(average_darkcolorcode = mean(as.integer(darkcode_value))),
+      #           aes(x = factor(date), y = average_darkcolorcode, group = site), 
+      #           color = "dark green",
+      #           show.legend = F) +
       facet_wrap(~site, ncol = 1) +
-      labs(x = "Date", y = "Color Value") +
+      labs(x = "Date", y = "Color Score", 
+           # title = "High, Average, and Low Coral Color Scores through Time"),
+           title = "Distribution of Color Scores from CoralWatch Surveys", 
+           color = "Survey During \nBleaching Season?"
+           )+
       scale_y_continuous(breaks = seq(1,6,by=1)) +
       theme_light() +
       theme(axis.text.x = element_text(angle = 90))
@@ -91,13 +94,16 @@
     
   #distribution of colors 
   darkcolor_distribution %>%
+    filter(site == "agat") %>%
     ggplot() +
       geom_bar(aes(x = factor(date), y = count_colorcode, 
                    fill = darkcode_value),
                stat = "identity", position = "fill") +
       scale_fill_brewer(palette = "YlOrBr") +
-      # facet_wrap(~site, ncol = 2) +
       theme_light() +
+      labs(x = "Date", y = "Proportion of Corals",
+           fill = "Color Score", 
+           title = "Agat") +
       theme(axis.text.x = element_text(angle = 90))
   
   

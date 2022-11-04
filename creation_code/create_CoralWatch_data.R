@@ -4,7 +4,7 @@
 ## 1. Set up
 
   # point to data locale
-  data_locale = "data/CoralWatch Data/CoralWatch2022-05/"
+  data_locale = "data/CoralWatch Data/CoralWatch2022-11/"
   
   # point to data file
   data_file = "data.xlsx"
@@ -27,7 +27,7 @@
                   "I used a GPS device to obtain coordinates", "Photo", 
                   "The count of unique values for colour code average.", 
                   "The count of unique values for type of coral.", "Not applicable", 
-                  "Not available...22", "Not available...25", "Country")
+                  "Country")
 
   CoralWatch_data = CoralWatch_data_initial %>%
     dplyr::select(!unused_cols)
@@ -74,19 +74,19 @@
   CoralWatch_data$date_time = paste(CoralWatch_data$date, CoralWatch_data$Time)
     
   
-## 3. Input the first row of data bc the download from CoralNet removes it
-## NEED TO MANUALLY UPDATE THIS EVERYTIME YOU DOWNLOAD AN UPDATED DATA FILE FROM CORALNET
-  
-  # find the contents of the first row online
-  first_row = c(13.47568, 144.703613, "asan", "Charles Hambley", "Charles Hambley", "2021-05-24",
-               "09:00 AM", "Full sunshine", NA, NA, NA, NA, "Snorkeling", "transect 5",
-               1, "D2", "D3", 2.5, "Branching corals", NA, "2021-05-24 09:00 AM")
-
-  # add the true first row to the bigger data frame
-  CoralWatch_data = rbind(first_row, CoralWatch_data)
-
-  # delete the weird latitude input added to Species in that new first row
-  CoralWatch_data[1, "Species"] = NA
+# ## 3. Input the first row of data bc the download from CoralNet removes it
+# ## NEED TO MANUALLY UPDATE THIS EVERYTIME YOU DOWNLOAD AN UPDATED DATA FILE FROM CORALNET
+#   
+#   # find the contents of the first row online
+#   first_row = c(13.47568, 144.703613, "asan", "Charles Hambley", "Charles Hambley", "2021-05-24",
+#                "09:00 AM", "Full sunshine", NA, NA, NA, NA, "Snorkeling", "transect 5",
+#                1, "D2", "D3", 2.5, "Branching corals", NA, "2021-05-24 09:00 AM")
+# 
+#   # add the true first row to the bigger data frame
+#   CoralWatch_data = rbind(first_row, CoralWatch_data)
+# 
+#   # delete the weird latitude input added to Species in that new first row
+#   CoralWatch_data[1, "Species"] = NA
 
 
 ## 4. Change data types to their correct form
@@ -101,7 +101,8 @@
            depth_ft = as.double(depth_ft),
            water_temp_C = as.double(water_temp_C),
            water_temp_F = as.double(water_temp_F),
-           coral_number = as.integer(coral_number))
+           coral_number = as.integer(coral_number),
+           date = as.POSIXct(date))
   
   
   # confirm that all data type transforms happened & that first row was added

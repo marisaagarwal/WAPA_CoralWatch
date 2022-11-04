@@ -1,7 +1,7 @@
 ##  Project Name:  WAPA Internship Temperature & CoralWatch Analyses
 ##
 ##  Objective:     Assess how water temperatures have changed over time; assess
-##                 how coral color (aka health) has changed over time.
+##                 how coral color has changed over time.
 ##
 ##  Approach:      1. Obtain most recent download of HOBO loggers from WAPA
 ##                    reef flat program

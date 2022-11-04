@@ -26,8 +26,36 @@
 
   # temp_tempdata = templightdepth_data %>%
   #   filter(Variable == "Temp_C")
-
   
+  
+  # max daily temperatures
+  daily_HOBO_temp_averages = 
+    templightdepth_data %>%
+      as_tibble() %>%
+      filter(Variable == "Temp_C") %>%
+      mutate(site = recode(Location, 
+                           `Adelup Far LL` = "adelup", 
+                           `Adelup LL` = "adelup",
+                           `Agat LL` = "agat",
+                           `Agat_Cluster_A_LL_` = "agat",
+                           `Agat_Cluster_B_` = "agat", 
+                           `Piti Outplant 10` = "asan", 
+                           `Piti Outplant 20` = "asan",
+                           `Piti Outplant 28` = "asan",
+                           `Piti Outplant 50` = "asan",
+                           `Hap's Reef #2` = "agat",
+                           `Hap's Reef #3` = "agat",
+                           `Piti LL` = "asan",
+                           `Piti_LL_` = "asan",
+                           `Adelup WL` = "adelup",
+                           `Agat WL` = "agat",
+                           `Piti WL` = "asan")) %>%
+      dplyr::select(-c(SerialNo, Location)) %>%
+      group_by(site, 
+               date = floor_date(DateTime, "day")) %>%
+      summarize(avg_temp = mean(Value))
+      
+
 ## 3. Are the outplant loggers recording different temperatures?
   
   # run a unique GAM for each site

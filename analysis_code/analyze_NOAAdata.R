@@ -21,5 +21,16 @@
                 avg_SST90th_HS = mean(`SST@90th_HS`), 
                 avg_SSTA90th_HS = mean(`SSTA@90th_HS`))
   
+  # daily SST averages
+  daily_NOAA_SST_averages = 
+    NOAA_data %>%
+      group_by(date = floor_date(date, "day")) %>%
+      summarize(avg_SST_max = mean(SST_MAX), 
+                avg_SST_min = mean(SST_MIN),
+                avg_SST90th_HS = mean(`SST@90th_HS`), 
+                avg_SSTA90th_HS = mean(`SSTA@90th_HS`)) %>%
+    filter(date > "2015-09-01")
+  
+  
   
 
