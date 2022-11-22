@@ -59,18 +59,20 @@
       theme_light()
   
   color_and_dailyNOAASST %>%
+    mutate(site = recode(site, agat = "Agat", adelup = "Adelup", asan = "Asan")) %>%
     filter(!coral_type == "Plate corals") %>%
       ggplot(aes(x = avg_SST_max, y = colorcode_average)) +
         geom_point(aes(color = coral_type), alpha = 0.35) +
         geom_smooth(method = "lm", color = "black") +
         facet_grid(coral_type~site) +
-        labs(x = "Maximum daily SST (from NOAA)",
+        labs(x = "Maximum Daily SST (from NOAA)",
              y = "Average Coral Color Score") +
         theme_light() +
         theme(legend.position = "none")
 
   # correlation between daily avg HOBO temp and avg color?
   color_and_dailyHOBOtemp %>%
+    mutate(site = recode(site, agat = "Agat", adelup = "Adelup", asan = "Asan")) %>%
     filter(!coral_type == "Plate corals") %>%
       ggplot(aes(x = avg_temp, y = colorcode_average)) +
         geom_point(aes(color = coral_type), alpha = 0.35) +
